@@ -3,6 +3,7 @@ from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.preprocessing import StandardScaler
 
 data = load_wine()
 X = data.data
@@ -12,9 +13,13 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.25, random_state=42, stratify=y
 )
 
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
 model = LogisticRegression(max_iter=5000)
-model.fit(X_train, y_train)
-y_pred = model.predict(X_test)
+model.fit(X_train_scaled, y_train)
+y_pred = model.predict(X_test_scaled)
 
 print("--- Original Model Results ---")
 
@@ -27,7 +32,7 @@ print(f"\n2. First 10 true values: {y_test[:10]}")
 print(f"   First 10 predictions: {y_pred[:10]}")
 
 # --- TASK 3 ---
-probs = model.predict_proba(X_test)
+probs = model.predict_proba(X_test_scaled)
 print(f"\n3. Probabilities for the first test example: {probs[0]}")
 
 # --- TASK 4 ---
@@ -56,12 +61,28 @@ print(f"   Average confidence for incorrect predictions: {avg_conf_incorrect:.4f
 
 # --- TASK 6 ---
 model_small_iter = LogisticRegression(max_iter=50)
-model_small_iter.fit(X_train, y_train)
-y_pred_small = model_small_iter.predict(X_test)
+model_small_iter.fit(X_train_scaled, y_train)
+y_pred_small = model_small_iter.predict(X_test_scaled)
 
 accuracy_small = accuracy_score(y_test, y_pred_small)
-print(f"6. New accuracy with smaller max_iter (50): {accuracy_small:.4f}")
+print(f"\n6. New accuracy with smaller max_iter (50): {accuracy_small:.4f}")
 
 # --- TASK 7 ---
+best_accuracy = 0
+best_iter = 0
+
+for i in range(20, 150):
+    temp_model = LogisticRegression(max_iter=i)
+    temp_model.fit(X_train_scaled, y_train)
+    temp_pred = temp_model.predict(X_test_scaled)
+    temp_acc = accuracy_score(y_test, temp_pred)
+    
+    if temp_acc > best_accuracy:
+        best_accuracy = temp_acc
+        best_iter = i
+
+print(f"\n7. Peak accuracy of {best_accuracy:.4f} achieved at max_iter = {best_iter}")
+
+# --- TASK 8 ---
 cm = confusion_matrix(y_test, y_pred)
-print("\n7. Confusion Matrix (Original Model):\n", cm)
+print("\n8. Confusion Matrix (Original Model):\n", cm)
