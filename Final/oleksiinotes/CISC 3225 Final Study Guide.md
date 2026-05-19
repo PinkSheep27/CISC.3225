@@ -198,3 +198,60 @@ print(pagerank_scores)
 ```text
 {'Google': 0.19825338581235977, 'Wikipedia': 0.3782425942751627, 'YouTube': 0.1217574057248373, 'OpenAI': 0.30174661418764015}
 ```
+
+# Videos
+## Neural Networks (Deep Learning Basics)
+**Video:** 3Blue1Brown - But what is a neural network?
+### Core Concept 
+Inspired by the brain, a neural network is essentially a highly complex mathematical function that processes inputs (like an image of a handwritten digit) through layers of "neurons" to produce a prediction.
+### Structure
+- **Neurons (Activations):** Nodes that hold numbers (typically between 0 and 1) representing the strength of their activation.
+- **Layers:** Networks consist of an **Input Layer** (raw data), **Hidden Layers** (where the pattern recognition happens), and an **Output Layer** (the final prediction).
+- **Weights & Biases:** The connections between neurons have **weights** (determining the importance of a connection). Each neuron also has a **bias** (a threshold that must be passed to activate the neuron). "Learning" involves tweaking these thousands (or billions) of knobs.
+### Mechanics
+- **Weighted Sum:** A neuron takes the outputs from the previous layer, multiplies them by their respective weights, and adds them up along with the bias.
+- **Activation Function:** The weighted sum is passed through a function like a **Sigmoid** (squishing values between 0 and 1) or **ReLU** (Rectified Linear Unit) to determine the neuron's final activation.
+## K-Means Clustering
+**Video:** StatQuest - K-means clustering
+### Core Concept
+An unsupervised learning algorithm used to group unlabelled data into a specified number of clusters ($K$).
+### The Algorithm Steps
+1.  **Select $K$:** Decide how many clusters you want to find.
+2.  **Initialize:** Randomly place $K$ initial points to act as the first cluster centers.
+3.  **Assign:** Measure the distance (typically Euclidean distance) from each data point to the initial centers. Assign each point to the nearest cluster.
+4.  **Recalculate:** Calculate the mean (center) of the newly formed clusters. 
+5.  **Repeat:** Use the new means as the cluster centers and reassign points. Repeat until the cluster assignments no longer change.
+### **Choosing the Best $K$
+Use an **Elbow Plot**. Plot the total variance within clusters for different values of $K$. As $K$ increases, variance drops. The optimal $K$ is typically at the "elbow" of the curve, where the reduction in variance starts to level off.
+## Large Language Models (LLMs) & Transformers
+**Video:** 3Blue1Brown - Large Language Models explained briefly
+### Core Concept
+LLMs are massive mathematical models with hundreds of billions of parameters. Their fundamental task is simple: **predict the probability of the next word** in a sequence.
+### Training Phases
+- **Pre-training:** Processing massive amounts of internet text to predict hidden words. An algorithm called **backpropagation** is used to adjust the model's parameters so its predictions get closer to the actual text.
+- **RLHF (Reinforcement Learning with Human Feedback):** Fine-tuning the model using human corrections so it behaves as a helpful conversational assistant rather than just a text autocomplete tool.
+### The Transformer Architecture
+Unlike older models that read text word-by-word, Transformers process entire sequences of text **in parallel**.
+- **Attention Mechanism:** The secret sauce of Transformers. It allows the model to look at the surrounding context of a word to refine its meaning (e.g., distinguishing a river "bank" from a financial "bank").
+## PageRank Algorithm
+**Video:** Arivu - The Algorithm That Made Google Unstoppable: PageRank
+### Core Concept
+The foundational algorithm behind Google Search. Instead of looking at keyword frequency, it ranks web pages based on the link structure of the internet, treating hyperlinks as "votes of confidence."
+### How it Works
+Not all votes are equal. A link from a highly authoritative page passes on far more weight than a link from an obscure blog.
+- **Random Surfer Model:** Picture a user randomly clicking links forever. A page's "PageRank" is the fraction of time the surfer spends on that page.
+- **Damping Factor (~15%):** Accounts for a surfer getting bored and jumping to a completely random page, ensuring they don't get trapped in loops or dead ends.
+### Key Insight
+Importance is recursive and dynamic. A page is important if other important pages link to it. The entire web can be modeled as a matrix equation to calculate these stable probabilities.
+## K-Nearest Neighbors (KNN)
+**Video:** Visually Explained - K-nearest Neighbors (KNN) in 3 min
+### Core Concept
+A highly intuitive algorithm for classification (and regression). It predicts the category of a new, unknown data point based on the majority label of its closest surrounding points.
+### The Algorithm
+1.  Choose a value for $K$ (number of neighbors to look at).
+2.  Calculate the distance (e.g., Euclidean or Manhattan) between the new point and all existing points.
+3.  Identify the $K$ closest points.
+4.  Assign the most common label among those neighbors to the new point.
+### Key Characteristics
+- **Lazy Learner:** It doesn't mathematically build or "train" a model in advance. It simply stores the dataset and runs the distance calculations on demand.
+- **Curse of Dimensionality:** KNN struggles when there are too many features (high dimensions), because the concept of "distance" becomes less meaningful, negatively impacting accuracy.
